@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/manage.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sale.html">Venta</a></li>
+            <li><a href="reports.html">Reportes</a></li>
+            <li id="dropdown"><a>Administrar</a>
+                <div class="dropdown-elements">
+                    <a href="product.html" class="dropdown-content dropdown">Products</a>
+                    <a href="client.html" class="dropdown-content dropdown">Clients</a>
+                </div>
+            </li>
+            <li><a href="inventory.html">Inventario</a></li>
+        </ul>
+    </div>
+
+<div class="container">
+<div class="sale">
+    <div class="firstrow">
+        <div class="saleinfo">
+            <div class="inputbox">
+                <span>Fecha</span>
+                <input type="date" id="datePicker" required>
+            </div>
+            <div class="inputbox number">
+                <span>Dolar</span>
+                <input id="dolar" type="number" value="40.00" required>
+            </div>
+        </div>
+        <div class="client">
+            <div class="inputbox number">
+                <span>DNI</span>
+                <input id="dni" type="number" required value="0">
+            </div>
+            <div class="inputbox">
+                <span>Nombre</span>
+                <input type="text" value="Generico" required>
+            </div>
+        </div>
+    </div>
+    <h1>Producto</h1>
+<div class="grid">
+    <div class="productinfo">
+        <div class="inputbox number">
+            <span>ID</span>
+            <input id="productid" type="number" required>
+        </div>
+        <div class="inputbox">
+            <span>Nombre</span>
+            <input type="text">
+        </div>
+        <div class="inputbox number">
+            <span>Costo</span>
+            <input type="number" value="0.00">
+        </div>
+        <div class="inputbox number">
+            <span>Cantidad</span>
+            <input type="number" id="quantity">
+        </div>
+    </div>
+
+    <div class="addsale">
+        <h2>Total</h2>
+        <input id="total" type="number" value="00" readonly>
+        <button id="addproduct">Agregar Producto</button>
+        <button id="addsale" type="submit">Agregar Venta</button>
+    </div>
+
+    <div class="table">
+        <table>
+            <thead>
+                <th>Cant.</th>
+                <th>Nombre</th>
+                <th>Costo</th>
+                <th>Sub Total</th>
+            </thead>
+            <tbody id="tablebody">
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+    window.onload = function() {
+        var today = new Date(); // Get current date
+        var day = String(today.getDate()).padStart(2, '0'); // Format day
+        var month = String(today.getMonth() + 1).padStart(2, '0'); // Format month (month is 0-indexed)
+        var year = today.getFullYear(); // Get full year
+        var currentDate = `${year}-${month}-${day}`; // Combine in YYYY-MM-DD format
+    
+        document.getElementById('datePicker').value = currentDate; // Set the date input value
+    };
+</script>
+<script type="module" src="./js/sales.js" ></script>
+
+</body>
+</html>

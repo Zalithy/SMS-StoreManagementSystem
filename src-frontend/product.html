@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sale.html">Venta</a></li>
+            <li><a href="reports.html">Reportes</a></li>
+            <li id="dropdown"><a>Administrar</a>
+                <div class="dropdown-elements">
+                    <a href="product.html" class="dropdown-content dropdown">Products</a>
+                    <a href="client.html" class="dropdown-content dropdown">Clients</a>
+                </div>
+            </li>
+            <li><a href="inventory.html">Inventario</a></li>
+        </ul>
+    </div>
+
+<h1 class="title">Productos</h1>
+
+<div class="container">
+
+    <div class="productInfo">
+
+        <div class="inputbox">
+            <span>ID</span>
+            <input type="number" id="id" required>
+        </div>
+        <div class="inputbox">
+            <span>Nombre</span>
+            <input type="text" id="name" required>
+        </div>
+        <div class="inputbox">
+            <span>Precio</span>
+            <input type="number" id="cost" readonly>
+        </div>
+        <div class="inputbox">
+            <span>Categoria</span>
+            <select class="category">
+
+            </select>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn add" id="add"><i class="fa fa-plus"></i>Agregar</button>
+        <button class="btn modify" id="modify"><i class="fa fa-edit"></i>Modificar</button>
+        <button class="btn remove" id="remove"><i class="fa fa-trash"></i>Remover</button>
+    </div>
+
+    
+<div class="tablecontainer">
+    <table class="table">
+        <thead>
+            <th id="idcolumn">ID</th>
+            <th id="quantitycolumn">Quantity</th>
+            <th id="namecolumn">Nombre</th>
+            <th id="pricecolumn">Precio</th>
+            <th id="categorycolumn">Categoria</th>
+        </thead>
+        <tbody id="tablebody">
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="productsData">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores error voluptates, perspiciatis molestias nobis ex magni eius ducimus accusantium, facere unde? Nostrum labore reprehenderit nemo nam, facilis incidunt quibusdam debitis?</p>
+</div>
+
+</div>
+
+
+
+<dialog id="addItemDialog" class="custom-dialog">
+    <form method="dialog" class="dialog-form" id="dialogForm">
+        <h2 class="dialog-title">Agregar Nuevo Producto</h2>
+        <div class="custom-inputbox">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="custom-inputbox number">
+            <label for="price">Precio:</label>
+            <input type="number" id="price" name="price" step="0.10" placeholder="0.00" inputmode="decimal" required>
+        </div>
+        <div class="custom-inputbox">
+            <label for="category">Categorias:</label>
+            <select id="category" name="category" class="category" required>
+                
+            </select>
+        </div>
+        <div class="dialog-actions">
+            <button class="dialog-btn" value="cancel">Cerrar</button>
+            <button class="dialog-btn" id="clear" type="reset">Limpiar</button>
+            <button class="dialog-btn" type="submit" id="addProduct">Agregar Producto</button>
+        </div>
+    </form>
+</dialog>
+
+
+
+<script type="module" src="./js/product.js" ></script>
+
+<script>
+    let add = document.getElementById("add");
+
+    add.addEventListener("click", function() {
+
+        const dialog = document.getElementById('addItemDialog');
+        const openDialogButton = document.getElementById('openDialog');
+        const closeButton = document.querySelectorAll('.dialog-btn[value="cancel"]')[0];
+        const clearButton = document.getElementById('clear');
+
+        dialog.showModal();
+
+        // Function to close the dialog
+        closeButton.addEventListener('click', function() {
+            dialog.close();
+        });
+
+        // Clear form fields when clicking 'Clear'
+        clearButton.addEventListener('click', function() {
+            dialog.querySelectorAll('input, select').forEach(element => {
+                element.value = ''; // Reset each field
+            });
+        });
+});
+</script>
+
+<script>
+    const inputField = document.getElementById('price');
+  
+    inputField.addEventListener('keydown', function (event) {
+      // Prevent entry of non-numeric characters except backspace and delete
+      if (!event.key.match(/^[0-9]$/) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+        event.preventDefault();
+      }
+  
+      // Handle numeric input and backspace
+      if (event.key.match(/^[0-9]$/)) {
+        let currentVal = inputField.value.replace('.', ''); // Remove dot for calculation
+        // Append the new digit to the end of the string (rightmost side)
+        currentVal = currentVal + event.key;
+        // Maintain two decimal places
+        let integerPart = currentVal.slice(0, -2);
+        let decimalPart = currentVal.slice(-2);
+  
+        // Remove leading zeros from integer part if integer part has significant value
+        integerPart = integerPart.replace(/^0+/, '') || '0';
+  
+        // Format and set the new value
+        inputField.value = integerPart + '.' + decimalPart;
+        // Prevent the default input action
+        event.preventDefault();
+      }
+    });
+  
+    // Force cursor to end on focus
+    inputField.addEventListener('click', function () {
+      setTimeout(() => {
+        inputField.selectionStart = inputField.selectionEnd = 10000; // large number to ensure end positioning
+      }, 0);
+    });
+  
+    inputField.addEventListener('focus', function () {
+      setTimeout(() => {
+        inputField.selectionStart = inputField.selectionEnd = 10000; // large number to ensure end positioning
+      }, 0);
+    });
+  
+    // Initialize input value
+
+  </script>
+
+</body>
+</html>

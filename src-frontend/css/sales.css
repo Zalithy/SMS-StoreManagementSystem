@@ -1,0 +1,58 @@
+#venta {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin-top: 30px;
+    margin-inline: auto;
+
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.label-input {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#productinfo label{
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+#productinfo input{
+    border: 2px solid rgba(0, 0, 0, 0.425);
+    width: 20vw;
+    height: 3vh;
+}
+
+#productinfo .number input {
+    width: 8vw;
+}
+
+#submit {
+    float: right;
+    font-size: rem;
+}
+
+#table {
+    border: 1px solid black;
+    margin-top: 20px;
+    background-color: bisque;
+}
+
+.saleinfo {
+    display: flex;
+    background-color: aqua;
+    margin-left: auto;
+    width: 10px;
+    height: 100px;
+}
