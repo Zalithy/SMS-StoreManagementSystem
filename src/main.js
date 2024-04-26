@@ -43,7 +43,8 @@ function setupDatabase() {
     db.serialize(() => {
         // Create 'category' table
         db.run(`CREATE TABLE IF NOT EXISTS category (
-            name TEXT PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
+            name TEXT,
             type INTEGER
         );`, function(err) {
             if (err) {
@@ -86,8 +87,8 @@ function setupDatabase() {
                         quantity INTEGER DEFAULT 0,
                         name TEXT NOT NULL,
                         price REAL DEFAULT 0,
-                        category TEXT,
-                        FOREIGN KEY (category) REFERENCES category(name)
+                        category INTEGER,
+                        FOREIGN KEY (category) REFERENCES category(id)
                     );`, function(err) {
                         if (err) {
                             console.error('Error creating products table:', err.message);
@@ -106,11 +107,11 @@ function setupDatabase() {
 }
 
 
-ipcMain.handle('execute-query', async (event, query) => {
+ipcMain.handle('execute-query', async (event, sql, params = []) => {
     return new Promise((resolve, reject) => {
-        db.all(query, [], (err, rows) => {
+        db.all(sql, params, (err, rows) => {
             if (err) {
-                reject(err.message);
+                reject(new Error(`Failed to execute query: ${err.message}`));
             } else {
                 resolve(rows);
             }

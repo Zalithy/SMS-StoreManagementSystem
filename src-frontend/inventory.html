@@ -26,5 +26,17 @@
             <li><a href="inventory.html">Inventario</a></li>
         </ul>
     </div>
+
+
+<script>
+
+    const pyDolarVenezuela = require('../pydolarvenezuela');
+
+
+    pyDolarVenezuela.getPrecioDolar().then(precio => {
+    document.getElementById('precioDolar').textContent = precio;
+});
+</script>
+
 </body>
 </html>

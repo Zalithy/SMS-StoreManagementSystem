@@ -44,3 +44,4 @@ addproductbtn.addEventListener("click", () => {
     
 })
 
+document.add
