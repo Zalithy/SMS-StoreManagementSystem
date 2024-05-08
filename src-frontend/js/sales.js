@@ -1,47 +1,85 @@
-import { executeQuery, sqlQuery } from "./database.js";
+import { fetchQuery, executeUpdate } from './modules/database.js';
+import { findIdByName, findNameByID, findObject, getCurrentDate } from './modules/utilities.js';
+const productID = document.getElementById('productID');
+const productName = document.getElementById('productName');
+const productQuantity = document.getElementById('productQuantity');
+const productPrice = document.getElementById('productPrice');
 
-const submitbtn = document.getElementById("addsale");
-const addproductbtn = document.getElementById("addproduct");
+let productDB;
 
-let allProducts = {
+let total = 0;
+let productToSale = [];
 
+function addProduct(productID, productQuantity){
+    let object = {
+        id: productID,
+        quantity: productQuantity
+    }
+    productToSale.push(object);
 }
 
-async function productName(productID){
-    let result = await executeQuery(`SELECT name FROM products WHERE id = ${productID}`)
-    console.log(result);
-    return result;
-}
-
-function addRowToTable(quantity, cost, productID) {
-    let tableBody = document.getElementById("tablebody");
-    let row = tableBody.insertRow(); // Append a new row at the end
-
-    let cell1 = row.insertCell(); // Append a new cell for quantity
-    let cell2 = row.insertCell(); // Append a new cell for name
-    let cell3 = row.insertCell(); // Append a new cell for cost
-    let cell4 = row.insertCell(); // Append a new cell for subtotal
-
-    allProducts[productID] = quantity;
-
-    cell1.innerText = allProducts[productID];
-    cell2.innerText = productID;
-    cell3.innerText = `$${cost}`;
-    cell4.innerText = `$${allProducts[productID] * cost}`;
-}
-
-addproductbtn.addEventListener("click", () => {
-    const date = document.getElementById("datePicker").value;
-    const dolar = document.getElementById("dolar").value;
-    const productID = document.getElementById("productid").value;
-    const quantity =  document.getElementById("quantity").value;
-
-    addRowToTable(quantity, dolar, productID);
-
-    sqlQuery(`INSERT INTO products (name) VALUES ("messi")`);
-
-
-    
+document.addEventListener("DOMContentLoaded", async () => {
+  productDB = await fetchQuery(`SELECT * FROM products;`);
+  console.log(productDB);
 })
 
-document.add
+const addProductForm = document.getElementById('addProductForm');
+
+addProductForm.addEventListener("submit", () => {
+    event.preventDefault();
+    if (!findNameByID(productDB, parseInt(productID.value, 10))) {
+        alert(`El producto numero: "${productID.value}" no existe`);
+    } 
+    else {
+        addProduct(parseInt(productID.value, 10), parseInt(productQuantity.value, 10))  
+        const saleTable = document.getElementById('saleTable');
+
+        let row = saleTable.insertRow();
+
+        let quantityCell = row.insertCell();
+        let nameCell = row.insertCell();
+        let priceCell = row.insertCell();
+        let totalCell = row.insertCell();
+
+        quantityCell.textContent = `${productQuantity.value}`;
+        nameCell.textContent = `${productName.value}`;
+        priceCell.textContent = `${productPrice.value} $`;
+        let subTotal = parseFloat(productQuantity.value) * parseFloat(productPrice.value); // parseInt(productQuantity.value, 10) * parseInt(productPrice.value, 10)
+        totalCell.textContent = `${subTotal} $`;
+
+        total += subTotal;
+
+        let totalRow = document.getElementById('totalRow');
+
+        totalRow.innerText = `${total} $`;
+    }
+        productID.value = '';
+        productName.value = '';
+        productPrice.value = '';
+        productQuantity.value = '';
+  }
+)
+
+const executeSale = document.getElementById('executeSale');
+
+executeSale.addEventListener('click', async () => {
+    
+    let paymentMethod = ((document.getElementById('paymentMethod').value).toLowerCase()).replace(/ /g, "");
+
+    if (productToSale.length == 0) {
+        alert('Por favor, agregue al menos un producto')
+        return
+    }
+    
+
+    let json = JSON.stringify(productToSale);
+
+    executeUpdate(`
+        INSERT INTO sales (productsJson, customer_id, saleDate, paymentmethod) 
+        VALUES ('${json}', 1, ${getCurrentDate()}, "${paymentMethod}");
+    `)
+    productToSale.forEach((p) => {
+        let product = findObject(productDB, p.id);
+        executeUpdate(`UPDATE products SET quantity = ${product.quantity - p.quantity} WHERE id = ${p.id}`);
+    })
+})

@@ -103,7 +103,7 @@ th:last-child, td:last-child {
 thead th {
     position: sticky;
     top: 0;
-    background-color: #fafafa;
+    background-color: #ee9c9c;
     color: #333;
     font-size: 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -121,33 +121,4 @@ tbody tr:hover {
 
 tbody td {
     cursor: pointer;
-}
-
-/* General button styling */
-.action-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 8px; /* Increased padding for larger button appearance */
-    font-size: 18px; /* Larger font size for better visibility */
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Different button styles for edit and delete */
-.edit i, .delete i {
-    font-size: 1.2rem; /* Larger icon size for better visibility */
-    transition: color 0.3s, transform 0.2s ease-in-out;
-}
-
-.edit i {
-    color: #4caf50; /* Consistent green color for edit */
-}
-
-.delete i {
-    color: #f44336; /* Consistent red color for delete */
-}
-
-.edit i:hover, .delete i:hover {
-    transform: scale(1.3); /* Larger scaling effect on hover */
-    color: #34515e; /* Unified color change on hover for better UX */
 }

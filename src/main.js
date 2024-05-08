@@ -45,7 +45,8 @@ function setupDatabase() {
         db.run(`CREATE TABLE IF NOT EXISTS category (
             id INTEGER PRIMARY KEY,
             name TEXT,
-            type INTEGER
+            type INTEGER DEFAULT 1,
+            active INTEGER DEFAULT 1
         );`, function(err) {
             if (err) {
                 console.error('Error creating category table:', err.message);
@@ -58,7 +59,8 @@ function setupDatabase() {
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 phonenumber TEXT,
-                sale_date DATETIME
+                saleDate DATETIME,
+                active INTEGER DEFAULT 1
             );`, function(err) {
                 if (err) {
                     console.error('Error creating customers table:', err.message);
@@ -69,9 +71,9 @@ function setupDatabase() {
                 // Create 'sales' table
                 db.run(`CREATE TABLE IF NOT EXISTS sales (
                     id INTEGER PRIMARY KEY,
-                    products_json TEXT,
+                    productsJson TEXT,
                     customer_id INTEGER,
-                    sale_date DATETIME,
+                    saleDate DATETIME,
                     paymentmethod TEXT,
                     FOREIGN KEY (customer_id) REFERENCES customers(id)
                 );`, function(err) {
@@ -88,6 +90,7 @@ function setupDatabase() {
                         name TEXT NOT NULL,
                         price REAL DEFAULT 0,
                         category INTEGER,
+                        active INTEGER DEFAULT 1,
                         FOREIGN KEY (category) REFERENCES category(id)
                     );`, function(err) {
                         if (err) {
