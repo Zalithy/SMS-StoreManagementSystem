@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMS</title>
-    <link rel="stylesheet" href="css/sales.css">
-    <link rel="stylesheet" href="css/sidebar.css">
+
+    <link rel="stylesheet" href="css/index/index.css">
+    <link rel="stylesheet" href="css/reports.css">
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <div class="links">
-            <a href="index.html">Reportes</a>
+            <a href="reports.html">Reportes</a>
             <a href="sale.html">Venta</a>
-            <a href="reports.html">Productos</a>
+            <a href="product.html">Productos</a>
             <a href="inventory.html">Inventario</a>
         </div>
     </div>
     
 
 <div class="container">
-    <h1> Products </h1>
+    <h1 class="header"> Productos </h1>
     <table class="productInfo">
         <thead>
             <tr>
@@ -32,27 +33,28 @@
         <tbody>
             <form id="addProductForm">
                 <td>
-                    <input type="number" step="1" id="productID" required>
+                    <input class="input" type="number" step="1" id="productID" required>
                 </td>
-                <td><input type="text" id="productName"></td>
-                <td><input type="number" step="1" id="productQuantity" required></td>
-                <td><input type="text" readonly id="productPrice" ></td>
-                <td><button class="add-product-button" id="addProductBtn" type="submit">Anadir Producto</button></td>
+                <td><input class="input" type="text" id="productName"></td>
+                <td><input class="input" type="number" step="1" id="productQuantity" required></td>
+                <td><input class="input" type="text" readonly id="productPrice" ></td>
+                <td><button class="addButton" id="addProductBtn" type="submit">Anadir Producto</button></td>
             </form>
         </tbody>
     </table>
 
-
-
-    <button class="add-product-button" id="executeSale">Ejecutar Venta</button>
+    <h1 class="header"> Venta </h1>
     
-    <select id="paymentMethod">
+    <strong style="font-size: large; margin-right: 20px;">Metodo de pago:</strong>
+    <select id="paymentMethod" class="input">
+        <option disabled selected>Metodo de pago</option>
         <option>Efectivo</option>
         <option>Pago Movil</option>
         <option>Punto</option>
     </select>
-    
-    <table class="productsList">
+    <button class="button" id="executeSale">Ejecutar Venta</button>
+
+    <table class="table">
         <thead>
             <tr>
                 <th>Cant.</th>
@@ -62,6 +64,7 @@
             </tr>
         </thead>
         <tbody id="saleTable">
+            
         </tbody>
         <tbody>
             <tr>

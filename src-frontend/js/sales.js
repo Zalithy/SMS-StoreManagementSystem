@@ -10,10 +10,11 @@ let productDB;
 let total = 0;
 let productToSale = [];
 
-function addProduct(productID, productQuantity){
+function addProduct(productID, productQuantity, productPrice){
     let object = {
         id: productID,
-        quantity: productQuantity
+        quantity: productQuantity,
+        price: productPrice
     }
     productToSale.push(object);
 }
@@ -31,7 +32,8 @@ addProductForm.addEventListener("submit", () => {
         alert(`El producto numero: "${productID.value}" no existe`);
     } 
     else {
-        addProduct(parseInt(productID.value, 10), parseInt(productQuantity.value, 10))  
+        addProduct(parseInt(productID.value, 10), parseInt(productQuantity.value, 10), parseFloat(productPrice.value))
+
         const saleTable = document.getElementById('saleTable');
 
         let row = saleTable.insertRow();
@@ -63,23 +65,39 @@ addProductForm.addEventListener("submit", () => {
 const executeSale = document.getElementById('executeSale');
 
 executeSale.addEventListener('click', async () => {
-    
     let paymentMethod = ((document.getElementById('paymentMethod').value).toLowerCase()).replace(/ /g, "");
 
     if (productToSale.length == 0) {
         alert('Por favor, agregue al menos un producto')
         return
     }
-    
+    else if (paymentMethod == "metododepago") {
+        alert('Por favor, selecione el metodo de pago')
+        return
+    }
 
     let json = JSON.stringify(productToSale);
-
+    console.log(getCurrentDate())
     executeUpdate(`
         INSERT INTO sales (productsJson, customer_id, saleDate, paymentmethod) 
-        VALUES ('${json}', 1, ${getCurrentDate()}, "${paymentMethod}");
+        VALUES ('${json}', 1, '${getCurrentDate()}', "${paymentMethod}");
     `)
     productToSale.forEach((p) => {
         let product = findObject(productDB, p.id);
         executeUpdate(`UPDATE products SET quantity = ${product.quantity - p.quantity} WHERE id = ${p.id}`);
     })
+    location.reload();
+    alert(`Venta ejecutada con exito`);
+})
+
+productID.addEventListener("input", () => {
+    let productFound = productDB.find(product => product.id == parseInt(productID.value, 10));
+    if (productFound){
+        productName.value = productFound.name;
+        productPrice.value = productFound.price.toString();
+    }
+    else {
+        productName.value = `ID: ${productID.value} no existe`;
+        productPrice.value = '';
+    }
 })

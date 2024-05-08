@@ -73,7 +73,7 @@ function setupDatabase() {
                     id INTEGER PRIMARY KEY,
                     productsJson TEXT,
                     customer_id INTEGER,
-                    saleDate DATETIME,
+                    saleDate TEXT,
                     paymentmethod TEXT,
                     FOREIGN KEY (customer_id) REFERENCES customers(id)
                 );`, function(err) {

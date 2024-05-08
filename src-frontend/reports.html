@@ -3,28 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>SMS</title>
+    <link rel="stylesheet" href="css/index/index.css">
 
 </head>
 <body>
-    <div class="navbar">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="sale.html">Venta</a></li>
-            <li><a href="reports.html">Reportes</a></li>
-            <li id="dropdown"><a>Administrar</a>
-                <div class="dropdown-elements">
-                    <a href="product.html" class="dropdown-content dropdown">Products</a>
-                    <a href="client.html" class="dropdown-content dropdown">Clients</a>
-                </div>
-            </li>
-            <li><a href="inventory.html">Inventario</a></li>
-        </ul>
+
+    <div class="sidebar" id="sidebar">
+        <div class="links">
+            <a href="reports.html">Reportes</a>
+            <a href="sale.html">Venta</a>
+            <a href="product.html">Productos</a>
+            <a href="inventory.html">Inventario</a>
+        </div>
     </div>
+    
+
+<div class="container">
+
+    <h1 class="header">Ventas</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Cliente</th>
+                <th>Metodo de pago</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+    </table>
+
+</div>
+
+<dialog id="showSale" class="dialog">
+    <h1 class="header">Informacion</h1>
+    <table class="table">
+        <thead>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Metodo de pago</th>
+        </thead>
+        <tbody id="saleInfoTable">
+        </tbody>
+    </table>
+    <h1 class="header">Venta</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cant.</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="modalTable">
+        </tbody>
+    </table>
+
+</dialog>
+    
+<script type="module" src="./js/reports.js"></script>
+
 </body>
 </html>

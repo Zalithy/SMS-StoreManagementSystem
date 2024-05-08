@@ -10,13 +10,19 @@
 
 </head>
 <body>
-    <div class="sidebar" id="sidebar">
-        <div class="links">
-            <a href="index.html">Home</a>
-            <a href="sale.html">Venta</a>
-            <a href="reports.html">Reportes</a>
-            <a href="inventory.html">Inventario</a>
-        </div>
+    <div class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sale.html">Venta</a></li>
+            <li><a href="reports.html">Reportes</a></li>
+            <li id="dropdown"><a>Administrar</a>
+                <div class="dropdown-elements">
+                    <a href="product.html" class="dropdown-content dropdown">Products</a>
+                    <a href="client.html" class="dropdown-content dropdown">Clients</a>
+                </div>
+            </li>
+            <li><a href="inventory.html">Inventario</a></li>
+        </ul>
     </div>
 
 <h1 class="title">Productos</h1>

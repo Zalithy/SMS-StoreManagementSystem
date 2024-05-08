@@ -106,7 +106,7 @@ table.productInfo input:focus {
 .productsList th, .productsList td {
     padding: 12px 20px;
     text-align: center;
-    border-right: 1px solid #ffb5b5;
+    border-right: 1px solid #ffffff;
     transition: background-color 0.2s ease, box-shadow 0.3s ease;
 }
 
@@ -121,7 +121,7 @@ table.productInfo input:focus {
     color: #333;
     font-size: 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border-right: 1px solid #ff0000;
+    border-right: 1px solid #f7dada;
 }
 
 .productsList tbody tr:nth-child(odd) {
